@@ -21,6 +21,9 @@ def factorial(n):
 
 
 def recursive_f(n):
+    if n > 1000:
+        return None
+
     if n < 3:
         return 1
     else:
@@ -32,28 +35,32 @@ def recursive_f(n):
         except ZeroDivisionError:
            return "Деление на ноль!"
 
-
-
 def iterative_f(n):
+    if n > 1000:
+        return None
     if n < 1:
         return "Недопустимое значение n!"
     if n < 3:
         return 1
     else:
-        f_n_minus_2 = 1
+        f_n_minus_2 = 1  # F(1) и F(2) = 1
+        f_n_minus_4 = 1
+        f_n = 0
         for i in range(3, n + 1):
-             try:
-                 fact_val = factorial(2 * i)
-                 if fact_val is None:
-                   return "Факториал определен только для неотрицательных чисел"
-                 f_n = (-1) ** i * (f_n_minus_2 / fact_val)
-                 f_n_minus_2 = f_n
+           try:
+                fact_val = factorial(2 * i)
+                if fact_val is None:
+                    return "Факториал определен только для неотрицательных чисел"
+                f_n = (-1) ** i * (f_n_minus_2 / fact_val)
 
-             except ZeroDivisionError:
+                f_n_minus_4 = f_n_minus_2  # Сохраняем предыдущий F(n-2)
+                f_n_minus_2 = f_n          # Текущее значение F(n)
+           except ZeroDivisionError:
                  return "Деление на ноль!"
-             except OverflowError:
-                 return "Переполнение!"
-        return f_n_minus_2
+           except OverflowError:
+                return "Переполнение!"
+
+        return f_n
 
 
 def compare_times(n_values):
