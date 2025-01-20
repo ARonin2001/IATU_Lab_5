@@ -21,22 +21,23 @@ def factorial(n):
 
 
 def recursive_f(n):
-    if n > 1000:
+    if n > 50:
         return None
 
     if n < 3:
         return 1
     else:
         try:
+            fn_minus_2 = recursive_f(n - 2) if n > 2 else 1
             fact_val = factorial(2 * n) # Факториал вычисляется для 2*n
             if fact_val is None:
                  return "Факториал определен только для неотрицательных чисел" #Возвращаем ошибку
-            return (-1)**n * (recursive_f(n - 2) / fact_val)
+            return (-1)**n * (fn_minus_2 / fact_val)
         except ZeroDivisionError:
            return "Деление на ноль!"
 
 def iterative_f(n):
-    if n > 1000:
+    if n > 50:
         return None
     if n < 1:
         return "Недопустимое значение n!"
@@ -44,7 +45,6 @@ def iterative_f(n):
         return 1
     else:
         f_n_minus_2 = 1  # F(1) и F(2) = 1
-        f_n_minus_4 = 1
         f_n = 0
         for i in range(3, n + 1):
            try:
@@ -53,7 +53,6 @@ def iterative_f(n):
                     return "Факториал определен только для неотрицательных чисел"
                 f_n = (-1) ** i * (f_n_minus_2 / fact_val)
 
-                f_n_minus_4 = f_n_minus_2  # Сохраняем предыдущий F(n-2)
                 f_n_minus_2 = f_n          # Текущее значение F(n)
            except ZeroDivisionError:
                  return "Деление на ноль!"
