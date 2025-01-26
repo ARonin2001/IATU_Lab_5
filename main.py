@@ -6,18 +6,19 @@
 """
 
 import time
-import math
 
 def factorial(n):
     if n == 0:
         return 1
     elif n < 0:
         return None  # Возвращаем None для обозначения ошибки
-    else:
-        result = 1
-        for i in range(1, n + 1):
-            result *= i
-        return result
+
+    result = 1
+    for i in range(1, n - 1):
+        result *= i
+
+    result *= (n - 1) * n
+    return result
 
 
 def recursive_f(n):
@@ -32,7 +33,9 @@ def recursive_f(n):
             fact_val = factorial(2 * n) # Факториал вычисляется для 2*n
             if fact_val is None:
                  return "Факториал определен только для неотрицательных чисел" #Возвращаем ошибку
-            return (-1)**n * (fn_minus_2 / fact_val)
+
+            minus_1_degree = 1 if n % 2 == 0 else -1
+            return minus_1_degree * (fn_minus_2 / fact_val)
         except ZeroDivisionError:
            return "Деление на ноль!"
 
