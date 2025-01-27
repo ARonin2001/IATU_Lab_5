@@ -54,7 +54,9 @@ def iterative_f(n):
                 fact_val = factorial(2 * i)
                 if fact_val is None:
                     return "Факториал определен только для неотрицательных чисел"
-                f_n = (-1) ** i * (f_n_minus_2 / fact_val)
+
+		minus_1_degree = 1 if i % 2 == 0 else -1
+                f_n = minus_1_degree * (f_n_minus_2 / fact_val)
 
                 f_n_minus_2 = f_n          # Текущее значение F(n)
            except ZeroDivisionError:
