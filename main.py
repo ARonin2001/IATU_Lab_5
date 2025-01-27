@@ -14,10 +14,9 @@ def factorial(n):
         return None  # Возвращаем None для обозначения ошибки
 
     result = 1
-    for i in range(1, n - 1):
+    for i in range(1, n + 1):
         result *= i
 
-    result *= (n - 1) * n
     return result
 
 
@@ -28,14 +27,21 @@ def recursive_f(n):
     if n < 3:
         return 1
     else:
+        result_factorial = None
         try:
             fn_minus_2 = recursive_f(n - 2) if n > 2 else 1
-            fact_val = factorial(2 * n) # Факториал вычисляется для 2*n
-            if fact_val is None:
+
+            n_fact = 2 * n
+            if result_factorial is None:
+                result_factorial = factorial(n_fact)
+            else:
+                result_factorial *=  (n_fact - 1) * n_fact
+
+            if result_factorial is None:
                  return "Факториал определен только для неотрицательных чисел" #Возвращаем ошибку
 
             minus_1_degree = 1 if n % 2 == 0 else -1
-            return minus_1_degree * (fn_minus_2 / fact_val)
+            return minus_1_degree * (fn_minus_2 / result_factorial)
         except ZeroDivisionError:
            return "Деление на ноль!"
 
@@ -49,14 +55,20 @@ def iterative_f(n):
     else:
         f_n_minus_2 = 1  # F(1) и F(2) = 1
         f_n = 0
+        result_factorial = None
         for i in range(3, n + 1):
            try:
-                fact_val = factorial(2 * i)
-                if fact_val is None:
+                n_fact = 2 * i
+                if result_factorial is None:
+                    result_factorial = factorial(n_fact)
+                else:
+                    result_factorial *=  (n_fact - 1) * n_fact
+
+                if result_factorial is None:
                     return "Факториал определен только для неотрицательных чисел"
 
-		minus_1_degree = 1 if i % 2 == 0 else -1
-                f_n = minus_1_degree * (f_n_minus_2 / fact_val)
+                minus_1_degree = 1 if i % 2 == 0 else -1
+                f_n = minus_1_degree * (f_n_minus_2 / result_factorial)
 
                 f_n_minus_2 = f_n          # Текущее значение F(n)
            except ZeroDivisionError:
