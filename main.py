@@ -19,6 +19,21 @@ def factorial(n):
 
     return result
 
+def factorial_2n():
+    result_factorial = None
+
+    def fact(n):
+        nonlocal result_factorial
+        
+        n_fact = 2 * n
+        if result_factorial is None:
+            result_factorial = factorial(n_fact)
+        else:
+            result_factorial *=  (n_fact - 1) * n_fact
+
+        return result_factorial
+    
+    return fact
 
 def recursive_f(n):
     if n > 50:
@@ -27,16 +42,11 @@ def recursive_f(n):
     if n < 3:
         return 1
     else:
-        result_factorial = None
+        factorial_func_2n = factorial_2n()
         try:
             fn_minus_2 = recursive_f(n - 2) if n > 2 else 1
 
-            n_fact = 2 * n
-            if result_factorial is None:
-                result_factorial = factorial(n_fact)
-            else:
-                result_factorial *=  (n_fact - 1) * n_fact
-
+            result_factorial = factorial_func_2n(n) #вычисление факториала
             if result_factorial is None:
                  return "Факториал определен только для неотрицательных чисел" #Возвращаем ошибку
 
@@ -55,15 +65,10 @@ def iterative_f(n):
     else:
         f_n_minus_2 = 1  # F(1) и F(2) = 1
         f_n = 0
-        result_factorial = None
+        factorial_func_2n = factorial_2n()
         for i in range(3, n + 1):
            try:
-                n_fact = 2 * i
-                if result_factorial is None:
-                    result_factorial = factorial(n_fact)
-                else:
-                    result_factorial *=  (n_fact - 1) * n_fact
-
+                result_factorial = factorial_func_2n(i) #вычисление факториала
                 if result_factorial is None:
                     return "Факториал определен только для неотрицательных чисел"
 
