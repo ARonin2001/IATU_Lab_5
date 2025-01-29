@@ -36,9 +36,8 @@ def factorial_2n():
     return fact
 
 def recursive_f(n):
-    if n > 50:
-        return None
-
+    if n < 1:
+        return "Недопустимое значение n!"
     if n < 3:
         return 1
     else:
@@ -56,33 +55,22 @@ def recursive_f(n):
            return "Деление на ноль!"
 
 def iterative_f(n):
-    if n > 50:
-        return None
     if n < 1:
         return "Недопустимое значение n!"
     if n < 3:
         return 1
     else:
-        f_n_minus_2 = 1  # F(1) и F(2) = 1
-        f_n = 0
+        F_prev_prev = 1  # F(0)
+        F_prev = 1       # F(1)
         factorial_func_2n = factorial_2n()
         for i in range(3, n + 1):
-           try:
-                result_factorial = factorial_func_2n(i) #вычисление факториала
-                if result_factorial is None:
-                    return "Факториал определен только для неотрицательных чисел"
+            result_factorial = factorial_func_2n(i)
+            minus_1_degree = 1 if i % 2 == 0 else -1
 
-                minus_1_degree = 1 if i % 2 == 0 else -1
-                f_n = minus_1_degree * (f_n_minus_2 / result_factorial)
-
-                f_n_minus_2 = f_n          # Текущее значение F(n)
-           except ZeroDivisionError:
-                 return "Деление на ноль!"
-           except OverflowError:
-                return "Переполнение!"
-
-        return f_n
-
+            F_current = minus_1_degree * (F_prev_prev / result_factorial)
+            F_prev_prev = F_prev
+            F_prev = F_current
+        return F_prev
 
 def compare_times(n_values):
     results = []
